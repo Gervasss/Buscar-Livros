@@ -1,0 +1,70 @@
+.Navbar {
+  position: fixed;
+  /* Mudei para fixed para garantir que a navbar permaneça no topo */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+  margin-top: -1%;
+  margin-left: -1.4%;
+  height: 10%;
+  width: 98%;
+  padding: 0 20px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.navbarlogo {
+  width: 10%;
+  height: 60px;
+}
+
+
+.Navbar img {
+  margin-left: 44px;
+  margin-right: 44px;
+  margin-top: 6px;
+}
+
+.Navbar .NavButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin-right:25% ;
+  
+
+}
+
+  .switch {
+    margin-top: 1%;
+    margin-right: -40%;
+    color: #000;
+    cursor: pointer;
+    transition: 0.5s;
+    &:hover {
+      color: #303b92;
+      transform: scale(1.2);
+    }
+  }
+
+
+.Navbar .NavButtons a {
+  text-decoration: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  color: #000;
+  transition: 0.5s;
+  &:hover{
+    transform: scale(1.2);
+    color: #303b92;
+  font-weight: bold;
+  }
+}
+
+
+
+
+

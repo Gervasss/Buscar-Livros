@@ -1,0 +1,11 @@
+body.dark-mode {
+  background-color: #363636;  
+  color: white;  
+}
+html, body {
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
