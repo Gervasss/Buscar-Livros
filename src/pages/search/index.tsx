@@ -22,15 +22,10 @@ export function SearchPage() {
   }
   const { darkMode } = themeContext;
 
-  useEffect(() => {
-  const fetchBooks = async () => {
-   
-    const cached = localStorage.getItem('booksCache');
-    if (cached) {
-      setBooks(JSON.parse(cached));
-      return; 
-    }
+ useEffect(() => {
+  const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
+  const fetchBooks = async () => {
     const areas = [
       "Ciências Biológicas",
       "Ciências Sociais",
@@ -68,31 +63,11 @@ export function SearchPage() {
           const items = response.data.items || [];
           console.log(`Itens da API para área ${area} página ${startIndex / 40 + 1}:`, items);
 
-          const books = items.map((item: {
-            id: string;
-            volumeInfo?: {
-              title?: string;
-              authors?: string[];
-              publisher?: string;
-              publishedDate?: string;
-              description?: string;
-              pageCount?: number;
-              categories?: string[];
-              language?: string;
-              previewLink?: string;
-              imageLinks?: {
-                thumbnail?: string;
-              };
-              industryIdentifiers?: { type: string; identifier: string }[];
-            };
-            accessInfo?: {
-              viewability?: string;
-            };
-          }): Livro => {
+          const books = items.map((item: any): Livro => {
             const info = item.volumeInfo || {};
-            const identifiers: { type: string; identifier: string }[] = info.industryIdentifiers || [];
-            const isbn10 = identifiers.find(id => id.type === 'ISBN_10')?.identifier;
-            const isbn13 = identifiers.find(id => id.type === 'ISBN_13')?.identifier;
+            const identifiers = info.industryIdentifiers || [];
+            const isbn10 = identifiers.find((id: any) => id.type === 'ISBN_10')?.identifier;
+            const isbn13 = identifiers.find((id: any) => id.type === 'ISBN_13')?.identifier;
 
             return {
               id: item.id,
@@ -116,6 +91,8 @@ export function SearchPage() {
 
           if (items.length < 40) break; 
 
+          await delay(1000);  // pausa 500ms antes da próxima requisição
+
         } catch (error) {
           console.error(`Erro ao buscar livros na área ${area}, página ${startIndex / 40 + 1}`, error);
           break;
@@ -124,7 +101,6 @@ export function SearchPage() {
     }
 
     setBooks(allBooks);
-    localStorage.setItem('booksCache', JSON.stringify(allBooks));
   };
 
   fetchBooks();

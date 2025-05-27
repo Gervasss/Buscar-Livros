@@ -48,6 +48,12 @@
       transform: scale(1.2);
     }
   }
+ 
+  .navtitle{
+    color: black;
+    margin-left: 36%;
+    font-size: 2rem;
+  }
 
 
 .Navbar .NavButtons a {

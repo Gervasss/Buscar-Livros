@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+
 import './styles.css';
 import { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext/ThemeContext';
@@ -27,9 +27,7 @@ const themeContext = useContext(ThemeContext);
         />
       
       <div className="NavButtons">
-        <Link to="/">Livros</Link>
-        <Link to="/">Área Temática</Link>
-        <Link to="/">Editora</Link>
+         <h1 className='navtitle'>Buscador Acadêmico</h1>
          <div className='switch' onClick={toggleDarkMode} style={{fontSize:"25px"}}>
         {darkMode ? <FaRegMoon />:<GoSun />}
        </div>
