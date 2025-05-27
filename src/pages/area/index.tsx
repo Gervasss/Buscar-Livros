@@ -1,9 +1,12 @@
-import { useContext, useEffect, useState, } from 'react';
+import { useContext, useEffect, useMemo, useState, } from 'react';
 import { PageContainer } from '../../components/PageContainer';
 import './styles.css';
 import { ThemeContext } from "../../components/ThemeContext/ThemeContext";
-import { ListBooks } from './styles';
+import { ListBooks, } from './styles';
 import { Navbar } from '../../components/Navbar';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -11,6 +14,7 @@ import { Navbar } from '../../components/Navbar';
 export function AreaPage() {
 const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const navigate = useNavigate();
 
 
     const themeContext = useContext(ThemeContext);
@@ -19,7 +23,7 @@ const [searchTerm, setSearchTerm] = useState('');
     }
     const { darkMode } = themeContext;
 
-    const areas = [
+    const areas = useMemo(() =>[ 
         { nome: "Ciências Biológicas", imagem: "src/assets/biologia.avif" },
          { nome: "Ciências Sociais", imagem: "src/assets/social.png" },
          { nome: "Filosofia", imagem: "src/assets/filosofia.png" },
@@ -40,7 +44,7 @@ const [searchTerm, setSearchTerm] = useState('');
         { nome: "Engenharia Florestal", imagem: "src/assets/florestal.png" },
         { nome: "Medicina", imagem: "src/assets/med.png" },
        { nome: "Psicologia", imagem: "src/assets/psi.jpg" },
-    ];
+    ],[]);
 
  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -65,14 +69,17 @@ useEffect(() => {
                 <h1>CURSOS</h1>
             </div>
             <section>
-                <input
+                <div  className="Search">
+                  <input
                     type="text"
-                    className="Search"
                     placeholder="Buscar..."
                     value={searchTerm}
                     onChange={handleSearchInput}
-                    style={{ border: '2px solid #c0c0c0' }}
-                />
+                    
+                 />
+                 <AiOutlineSearch style={{color:"grey"}} /> 
+                </div>
+                
                 <div className="content-1">
                     <ListBooks darkMode={darkMode}>
                         <section className='listagem-1'>
@@ -81,7 +88,7 @@ useEffect(() => {
                                     <li key={index} className="card">
                                         <img src={area.imagem} alt={area.nome} className='capa'/>
                                         <h2>{area.nome}</h2>
-                                        <button >Ver Livros</button>
+                                        <button onClick={() => navigate(`/area/${area.nome.toLowerCase()}`)} >Ver Livros</button>
                                     </li>
                                 ))}
                             </ul>

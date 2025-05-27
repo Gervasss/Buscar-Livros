@@ -4,10 +4,14 @@ import { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext/ThemeContext';
 import { FaRegMoon } from 'react-icons/fa';
 import { GoSun } from 'react-icons/go';
+import logouesb from "../../assets/uesb.png"
+import { useNavigate } from 'react-router-dom';
+
 
 
 export function Navbar() {
 const themeContext = useContext(ThemeContext);
+ const navigate = useNavigate();
 
   if (!themeContext) {
     throw new Error("useContext must be used within a ThemeProvider");
@@ -20,11 +24,14 @@ const themeContext = useContext(ThemeContext);
 
   return (
     <nav className="Navbar">
+      
        <img
-          src="src/assets/uesb.png"
+          src={logouesb}
           alt="logo uesb"
           className="navbarlogo"
+          onClick={() => navigate(`/`)}
         />
+      
       
       <div className="NavButtons">
          <h1 className='navtitle'>Buscador Acadêmico</h1>

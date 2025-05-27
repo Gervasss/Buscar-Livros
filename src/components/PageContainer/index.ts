@@ -19,4 +19,9 @@ export const PageContainer = styled.div<PageContainerProps>`
   transition: background-color 0.3s, color 0.3s;  /* Transição suave */
   overflow-y: auto;
    
+  .lupa{
+  color: ${({ darkMode }) => (darkMode ? 'white' : 'black')};  
+  }
+
+  
 `;
