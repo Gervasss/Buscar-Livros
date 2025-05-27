@@ -23,92 +23,112 @@ export function SearchPage() {
   const { darkMode } = themeContext;
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const cached = localStorage.getItem('booksCache');
-      if (cached) {
-        setBooks(JSON.parse(cached));
-        return;
-      }
+  const fetchBooks = async () => {
+   
+    const cached = localStorage.getItem('booksCache');
+    if (cached) {
+      setBooks(JSON.parse(cached));
+      return; 
+    }
 
-      const areas = [
-        "Ciências Biológicas",
-        "Ciências Sociais",
-        "Filosofia",
-        "Física",
-        "Geografia",
-        "História",
-        "Letras Modernas",
-        "Letras Vernáculas",
-        "Matemática",
-        "Pedagogia",
-        "Administração",
-        "Agronomia",
-        "Ciência da Computação",
-        "Ciências Contábeis",
-        "Ciências Econômicas",
-        "Cinema e Audiovisual",
-        "Comunicação Social",
-        "Direito",
-        "Engenharia Florestal",
-        "Medicina",
-        "Psicologia",
-        "programção"
-      ];
+    const areas = [
+      "Ciências Biológicas",
+      "Ciências Sociais",
+      "Filosofia",
+      "Física",
+      "Geografia",
+      "História",
+      "Letras Modernas",
+      "Letras Vernáculas",
+      "Matemática",
+      "Pedagogia",
+      "Administração",
+      "Agronomia",
+      "Ciência da Computação",
+      "Ciências Contábeis",
+      "Ciências Econômicas",
+      "Cinema e Audiovisual",
+      "Comunicação Social",
+      "Direito",
+      "Engenharia Florestal",
+      "Medicina",
+      "Psicologia",
+      "programção"
+    ];
 
-      let allBooks: Livro[] = [];
+    let allBooks: Livro[] = [];
 
-      for (const area of areas) {
-        for (let startIndex = 0; startIndex < 100; startIndex += 40) {
-          try {
-            const response = await api.get(
-              `/volumes?q=${encodeURIComponent(area)}&startIndex=${startIndex}&maxResults=40&key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
-            );
+    for (const area of areas) {
+      for (let startIndex = 0; startIndex < 100; startIndex += 40) {
+        try {
+          const response = await api.get(
+            `/volumes?q=${encodeURIComponent(area)}&startIndex=${startIndex}&maxResults=40&key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
+          );
 
-            const items = response.data.items || [];
-            console.log(`Itens da API para área ${area} página ${startIndex / 40 + 1}:`, items);
+          const items = response.data.items || [];
+          console.log(`Itens da API para área ${area} página ${startIndex / 40 + 1}:`, items);
 
-            const books = items.map((item: any): Livro => {
-              const info = item.volumeInfo || {};
-              const identifiers = info.industryIdentifiers || [];
-              const isbn10 = identifiers.find(id => id.type === 'ISBN_10')?.identifier;
-              const isbn13 = identifiers.find(id => id.type === 'ISBN_13')?.identifier;
-
-              return {
-                id: item.id,
-                titulo: info.title || "Sem título",
-                autores: info.authors || [],
-                editora: info.publisher,
-                dataPublicacao: info.publishedDate,
-                descricao: info.description,
-                isbn10,
-                isbn13,
-                numeroPaginas: info.pageCount,
-                categorias: info.categories,
-                imagemCapa: info.imageLinks?.thumbnail,
-                idioma: info.language,
-                linkPreview: info.previewLink,
-                tipoAcesso: mapViewability(item.accessInfo?.viewability),
+          const books = items.map((item: {
+            id: string;
+            volumeInfo?: {
+              title?: string;
+              authors?: string[];
+              publisher?: string;
+              publishedDate?: string;
+              description?: string;
+              pageCount?: number;
+              categories?: string[];
+              language?: string;
+              previewLink?: string;
+              imageLinks?: {
+                thumbnail?: string;
               };
-            });
+              industryIdentifiers?: { type: string; identifier: string }[];
+            };
+            accessInfo?: {
+              viewability?: string;
+            };
+          }): Livro => {
+            const info = item.volumeInfo || {};
+            const identifiers: { type: string; identifier: string }[] = info.industryIdentifiers || [];
+            const isbn10 = identifiers.find(id => id.type === 'ISBN_10')?.identifier;
+            const isbn13 = identifiers.find(id => id.type === 'ISBN_13')?.identifier;
 
-            // Atualiza o estado incrementalmente com os novos livros
-            allBooks = [...allBooks, ...books];
-            setBooks([...allBooks]);  // atualiza para re-renderizar mostrando os livros já carregados
+            return {
+              id: item.id,
+              titulo: info.title || "Sem título",
+              autores: info.authors || [],
+              editora: info.publisher,
+              dataPublicacao: info.publishedDate,
+              descricao: info.description,
+              isbn10,
+              isbn13,
+              numeroPaginas: info.pageCount,
+              categorias: info.categories,
+              imagemCapa: info.imageLinks?.thumbnail,
+              idioma: info.language,
+              linkPreview: info.previewLink,
+              tipoAcesso: mapViewability(item.accessInfo?.viewability),
+            };
+          });
 
-            if (items.length < 40) break; // fim dos resultados para essa área
+          allBooks = [...allBooks, ...books];
 
-          } catch (error) {
-            console.error(`Erro ao buscar livros na área ${area}, página ${startIndex / 40 + 1}`, error);
-            break;
-          }
+          if (items.length < 40) break; 
+
+        } catch (error) {
+          console.error(`Erro ao buscar livros na área ${area}, página ${startIndex / 40 + 1}`, error);
+          break;
         }
       }
+    }
 
-      localStorage.setItem('booksCache', JSON.stringify(allBooks));
-    };
+    setBooks(allBooks);
+    localStorage.setItem('booksCache', JSON.stringify(allBooks));
+  };
 
-    fetchBooks();
-  }, []);
+  fetchBooks();
+}, []);
 
 
 
