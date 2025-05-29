@@ -34,7 +34,7 @@ const themeContext = useContext(ThemeContext);
       
       
       <div className="NavButtons">
-         <h1 className='navtitle'>Buscador Acadêmico</h1>
+         <h1 className='navtitle'>Biblioteca Virtual</h1>
          <div className='switch' onClick={toggleDarkMode} style={{fontSize:"25px"}}>
         {darkMode ? <FaRegMoon />:<GoSun />}
        </div>
