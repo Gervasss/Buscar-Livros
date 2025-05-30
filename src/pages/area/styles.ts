@@ -17,6 +17,7 @@ export const Loader = styled.div`
   font-family: monospace;
   font-size: 30px;
   display: inline-grid;
+  color:#240E0B;
 
   &:before,
   &:after {
@@ -47,9 +48,9 @@ export const ListBooks = styled.div<ListBooksProps>`
     border: 2px solid #000;
     margin: 10px;
     display: flex;
-    background-color: ${({ darkMode }) => (darkMode ? '#2c2c2c' : '#fff')};
+    background-color: ${({ darkMode }) => (darkMode ? '#2c2c2c' : '#240E0B')};
     border-radius: 10px;
-    box-shadow: ${({ darkMode }) => (darkMode ? '10px 10px 1rem #2c2c2c' : '10px 10px 1rem #ccc')};
+    
     flex-direction: column;
     justify-content: flex-start;
     transition: 0.3s;
@@ -59,11 +60,19 @@ export const ListBooks = styled.div<ListBooksProps>`
     }
 
     h2 {
+    color:white;
+      text-align: center;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+     .titulo-livro {
+    color:#FFD700;
       text-align: center;
       font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 
     p {
+    color:white;
       margin: 0 5px 5px 5px;
       flex-grow: 1;  
     }
@@ -74,10 +83,12 @@ export const ListBooks = styled.div<ListBooksProps>`
       border-radius: 6px;
       margin-left: 85px;
       cursor: pointer;
-      background-color: #D3D3D3;
+      background-color: yellow;
+      color:#240E0B;
 
       &:hover {
-        background-color: #C0C0C0;
+      transitions: 1.2s;
+        background-color: #FFD700;
       }
     }
 

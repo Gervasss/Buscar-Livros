@@ -44,7 +44,7 @@ export function DetalhePage() {
     const fetchBooks = async () => {
       setLoading(true);
 
-      const cacheKey = `books_cached_${nomeMateria.toLowerCase()}`;
+      const cacheKey = `books_cached${nomeMateria.toLowerCase()}`;
 
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
@@ -172,7 +172,7 @@ export function DetalhePage() {
             <ListBooks darkMode={darkMode}>
               <section className='listagem-1'>
                 <ul className='lista'>
-                  {searchResults.length === 0 && <p>Nenhum livro encontrado.</p>}
+                  {searchResults.length === 0 && <h2 className='not-found'>Nenhum livro encontrado !</h2>}
                   {searchResults.map((livro, index) => (
                     <li key={index} className="card">
                       {livro.imagemCapa ? (
@@ -188,7 +188,7 @@ export function DetalhePage() {
                           alt="Capa padrão"
                         />
                       )}
-                      <h2>{livro.titulo}</h2>
+                      <h2 className='titulo-livro'>{livro.titulo}</h2>
                       <p>Editora: {livro.editora}</p>
                       <p>Autor(a): {livro.autores.join(', ')}</p>
                       <p>Categoria: {livro.categorias?.join(', ')}</p>

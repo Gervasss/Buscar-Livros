@@ -14,7 +14,7 @@ export const PageContainer = styled.div<PageContainerProps>`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: ${({ darkMode }) => (darkMode ? '#363636' : '#f5f7f9')}; 
+  background-color: ${({ darkMode }) => (darkMode ? '#363636' : '#483018')}; 
   color: ${({ darkMode }) => (darkMode ? 'white' : 'black')};  
   transition: background-color 0.3s, color 0.3s;  /* Transição suave */
   overflow-y: auto;
