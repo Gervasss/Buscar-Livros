@@ -81,7 +81,7 @@ useEffect(() => {
                 </div>
                 
                 <div className="content-1">
-                    <ListBooks darkMode={darkMode}>
+                    <ListBooks >
                         <section className='listagem-1'>
                             <ul className='lista'>
                                 {searchResults.map((area, index) => (

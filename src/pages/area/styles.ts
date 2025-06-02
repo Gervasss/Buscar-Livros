@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 
-type ListBooksProps = {
-  darkMode: boolean;  
-};
 
 const l11 = keyframes`
   100% {
@@ -34,7 +31,7 @@ export const Loader = styled.div`
 `;
 
 
-export const ListBooks = styled.div<ListBooksProps>`
+export const ListBooks = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;          
@@ -42,15 +39,16 @@ export const ListBooks = styled.div<ListBooksProps>`
   padding: 10px;
 
   .card {
-    height: 100%;
+    height: 90%;
     width: 60%;             
     min-width: 200px;       
     border: 2px solid #000;
     margin: 10px;
     display: flex;
-    background-color: ${({ darkMode }) => (darkMode ? '#2c2c2c' : '#240E0B')};
+    padding:8px;
+    box-shadow: 10px 10px 1rem #240E0B;
+    background-color: #240E0B;
     border-radius: 10px;
-    
     flex-direction: column;
     justify-content: flex-start;
     transition: 0.3s;
@@ -73,7 +71,7 @@ export const ListBooks = styled.div<ListBooksProps>`
 
     p {
     color:white;
-      margin: 0 5px 5px 5px;
+      margin: 0 1px 1px 1px;
       flex-grow: 1;  
     }
 
@@ -96,8 +94,10 @@ export const ListBooks = styled.div<ListBooksProps>`
       width: 100%;
       border-top-left-radius: 10px; 
       border-top-right-radius: 10px;
+      border-bottom-left-radius: 10px; 
+      border-bottom-right-radius: 10px;
       height: 220px;             
-      object-fit: cover;   
+      object-fit: contein;   
       object-position: 50% 10%;  
     }
   }

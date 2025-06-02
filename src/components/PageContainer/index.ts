@@ -14,14 +14,11 @@ export const PageContainer = styled.div<PageContainerProps>`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: ${({ darkMode }) => (darkMode ? '#363636' : '#483018')}; 
-  color: ${({ darkMode }) => (darkMode ? 'white' : 'black')};  
+  background-color: #483018; 
   transition: background-color 0.3s, color 0.3s;  /* Transição suave */
   overflow-y: auto;
    
-  .lupa{
-  color: ${({ darkMode }) => (darkMode ? 'white' : 'black')};  
-  }
+
 
   
 `;
