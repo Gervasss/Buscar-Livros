@@ -27,14 +27,12 @@ export function DetalhePage() {
 
 
   const areaQueryMap: Record<string, string> = {
-    'ciência da computação': 'Ciência da Computação OR programação',
-    'programação': 'programação',
-  };
-
-  const AgroQueryMap: Record<string, string> = {
-    agronomia: 'Agronomia OR Agricultura OR "Ciências Agrárias" OR "Engenharia Agronômica" OR Agropecuária OR "Agronegócio"',
+    'ciência da computação': 'Ciência da Computação OR "Programação" OR "Engenharia de Software" OR "Desenvolvimento de Software" OR "Inteligência Artificial" OR "Banco de Dados" OR "Algoritmos" OR "Estruturas de Dados" OR "Redes de Computadores" OR "Sistemas Operacionais" OR "Segurança da Informação" OR Cibersegurança OR "Tecnologia da Informação" OR "Java" OR "python"',
+     agronomia: 'Agronomia OR Agricultura OR "Ciências Agrárias" OR "Engenharia Agronômica" OR Agropecuária OR "Agronegócio"',
 
   };
+
+
 
 
 
@@ -44,7 +42,7 @@ export function DetalhePage() {
     const fetchBooks = async () => {
       setLoading(true);
 
-      const cacheKey = `books_cached${nomeMateria.toLowerCase()}`;
+      const cacheKey = `livross${nomeMateria.toLowerCase()}`;
 
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
@@ -60,12 +58,11 @@ export function DetalhePage() {
 
       let allBooks: Livro[] = [];
       const query = areaQueryMap[nomeMateria.toLowerCase()] || nomeMateria;
-      const aquery = AgroQueryMap[nomeMateria.toLowerCase()] || nomeMateria;
 
       for (let startIndex = 0; startIndex < 300; startIndex += 40) {
         try {
           const response = await api.get(
-            `/volumes?q=${encodeURIComponent(query), (aquery)}&startIndex=${startIndex}&maxResults=40&key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
+            `/volumes?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=40&key=${import.meta.env.VITE_GOOGLE_BOOKS_API_KEY}`
           );
 
           const items = response.data.items || [];
@@ -99,7 +96,7 @@ export function DetalhePage() {
 
           await new Promise(res => setTimeout(res, 1000));
         } catch (error) {
-          console.error(`Erro ao buscar livros da área ${query}, página ${startIndex / 40 + 1}`, error);
+          console.error(`Erro ao buscar livros da área Desejada, página ${startIndex / 40 + 1}`, error);
           break;
         }
       }
@@ -169,7 +166,7 @@ export function DetalhePage() {
           {loading ? (
             <Loader />
           ) : (
-            <ListBooks darkMode={darkMode}>
+            <ListBooks>
               <section className='listagem-1'>
                 <ul className='lista'>
                   {searchResults.length === 0 && <h2 className='not-found'>Nenhum livro encontrado !</h2>}

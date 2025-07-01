@@ -39,7 +39,7 @@ export const ListBooks = styled.div`
   padding: 10px;
 
   .card {
-    height: 90%;
+    height: 95%;
     width: 60%;             
     min-width: 200px;       
     border: 2px solid #000;
