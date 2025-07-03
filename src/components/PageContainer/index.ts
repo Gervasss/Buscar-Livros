@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 type PageContainerProps = {
   display?: string;
   padding?: number | string;
-  darkMode: boolean;  
+ 
 };
 
 export const PageContainer = styled.div<PageContainerProps>`

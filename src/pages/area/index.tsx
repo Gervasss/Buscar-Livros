@@ -1,7 +1,6 @@
-import { useContext, useEffect, useMemo, useState, } from 'react';
+import { useEffect, useMemo, useState, } from 'react';
 import { PageContainer } from '../../components/PageContainer';
 import './styles.css';
-import { ThemeContext } from "../../components/ThemeContext/ThemeContext";
 import { ListBooks, } from './styles';
 import { Navbar } from '../../components/Navbar';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -13,15 +12,9 @@ import { useNavigate } from 'react-router-dom';
 
 export function AreaPage() {
 const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<{ nome: string; imagem: string }[]>([]);
   const navigate = useNavigate();
 
-
-    const themeContext = useContext(ThemeContext);
-    if (!themeContext) {
-        throw new Error("useContext must be used within a ThemeProvider");
-    }
-    const { darkMode } = themeContext;
 
     const areas = useMemo(() =>[ 
         { nome: "Ciências Biológicas", imagem: "src/assets/biologia.avif" },
@@ -61,7 +54,7 @@ useEffect(() => {
   }, [areas, searchTerm]);
 
     return (
-        <PageContainer padding="0px" darkMode={darkMode}>
+        <PageContainer padding="0px">
             <div style={{ height: "90%", width: "94.8%", marginTop: "10px", marginLeft: "10px" }}>
                 <Navbar />
             </div>

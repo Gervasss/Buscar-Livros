@@ -3,14 +3,35 @@ import { PageContainer } from '../../components/PageContainer';
 import { Navbar } from '../../components/Navbar';
 import { ListBooks, Loader } from './styles';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useContext, useEffect, useState } from 'react';
-import { ThemeContext } from '../../components/ThemeContext/ThemeContext';
+import {  useEffect, useState } from 'react';
 import "./styles.css";
 import "./styles";
 import type { Livro } from '../../types/types';
 import api from '../../services/api';
 import capaPadrao from '../../assets/capa.png';
 
+
+
+type BookItem = {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    publisher?: string;
+    publishedDate?: string;
+    description?: string;
+    pageCount?: number;
+    categories?: string[];
+    imageLinks?: {
+      thumbnail?: string;
+    };
+    language?: string;
+    industryIdentifiers?: {
+      type: string;
+      identifier: string;
+    }[];
+  };
+};
 
 export function DetalhePage() {
   const { nomeMateria } = useParams<{ nomeMateria: string }>();
@@ -19,11 +40,7 @@ export function DetalhePage() {
   const [Books, setBooks] = useState<Livro[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const themeContext = useContext(ThemeContext);
-  if (!themeContext) {
-    throw new Error("useContext must be used within a ThemeProvider");
-  }
-  const { darkMode } = themeContext;
+
 
 
   const areaQueryMap: Record<string, string> = {
@@ -31,9 +48,6 @@ export function DetalhePage() {
      agronomia: 'Agronomia OR Agricultura OR "Ciências Agrárias" OR "Engenharia Agronômica" OR Agropecuária OR "Agronegócio"',
 
   };
-
-
-
 
 
   useEffect(() => {
@@ -67,11 +81,11 @@ export function DetalhePage() {
 
           const items = response.data.items || [];
 
-          const booksPage = items.map((item: any): Livro => {
+          const booksPage = items.map((item:BookItem): Livro => {
             const info = item.volumeInfo || {};
-            const identifiers = info.industryIdentifiers || [];
-            const isbn10 = identifiers.find((id: any) => id.type === 'ISBN_10')?.identifier;
-            const isbn13 = identifiers.find((id: any) => id.type === 'ISBN_13')?.identifier;
+            const identifiers = info.industryIdentifiers ?? [];
+            const isbn10 = identifiers.find((id) => id.type === 'ISBN_10')?.identifier;
+            const isbn13 = identifiers.find((id) => id.type === 'ISBN_13')?.identifier;
 
             return {
               id: item.id,
@@ -86,7 +100,6 @@ export function DetalhePage() {
               categorias: info.categories,
               imagemCapa: info.imageLinks?.thumbnail,
               idioma: info.language,
-              linkPreview: info.previewLink,
             };
           });
 
@@ -144,7 +157,7 @@ export function DetalhePage() {
   }, [Books, searchTerm]);
 
   return (
-   <PageContainer padding="0px" darkMode={darkMode}>
+   <PageContainer padding="0px" >
     <div style={{ height: "90%", width: "94.8%", marginTop: "10px", marginLeft: "10px" }}>
       <Navbar />
     </div>
@@ -192,7 +205,6 @@ export function DetalhePage() {
                       )}
                       <h2 className='titulo-livro'>{livro.titulo}</h2>
                       <p>Editora: {livro.editora}</p>
-                      <p>Autor(a): {livro.autores.join(', ')}</p>
                       <p>Categoria: {livro.categorias?.join(', ')}</p>
                       <p>Ano de Publicação: {livro.dataPublicacao ? formatDate(livro.dataPublicacao) : 'N/A'}</p>
                       <p>Páginas: {livro.numeroPaginas}</p>
