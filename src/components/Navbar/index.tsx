@@ -1,6 +1,6 @@
 
 import './styles.css';
-import logouesb from "../../assets/uesbb.png"
+import logouesb from "./../../../public/assets/uesbb.png"
 import { useNavigate } from 'react-router-dom';
 
 

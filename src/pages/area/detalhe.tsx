@@ -8,7 +8,7 @@ import "./styles.css";
 import "./styles";
 import type { Livro } from '../../types/types';
 import api from '../../services/api';
-import capaPadrao from '../../assets/capa.png';
+import capaPadrao from '../../../public/assets/capa.png';
 
 
 
