@@ -9,7 +9,6 @@ const l11 = keyframes`
 `;
 
 export const Loader = styled.div`
-  margin-top:5%;
   font-weight: bold;
   font-family: monospace;
   font-size: 30px;
@@ -79,7 +78,6 @@ export const ListBooks = styled.div`
       height: 30px;
       width: 40%;
       border-radius: 6px;
-      margin-left: 85px;
       cursor: pointer;
       background-color: yellow;
       color:#240E0B;

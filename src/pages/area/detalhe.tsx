@@ -42,7 +42,7 @@ export function DetalhePage() {
     const fetchBooks = async () => {
       setLoading(true);
 
-      const cacheKey = `livross${nomeMateria.toLowerCase()}`;
+      const cacheKey = `liv${nomeMateria.toLowerCase()}`;
 
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
@@ -144,28 +144,33 @@ export function DetalhePage() {
   }, [Books, searchTerm]);
 
   return (
-    <PageContainer padding="0px" darkMode={darkMode}>
-      <div style={{ height: "90%", width: "94.8%", marginTop: "10px", marginLeft: "10px" }}>
-        <Navbar />
-      </div>
-      <div className='title'>
-        <h1>{nomeMateria}</h1>
-      </div>
-      <section>
-        <div className="Search">
-          <input
-            type="text"
-            placeholder="Buscar..."
-            value={searchTerm}
-            onChange={handleSearchInput}
-          />
-          <AiOutlineSearch style={{ color: "grey" }} />
+   <PageContainer padding="0px" darkMode={darkMode}>
+    <div style={{ height: "90%", width: "94.8%", marginTop: "10px", marginLeft: "10px" }}>
+      <Navbar />
+    </div>
+
+    {loading ? (
+    <div className="loader-container">
+    <Loader className="loader" />
+  </div>
+    ) : (
+      <>
+        <div className='title'>
+          <h1>{nomeMateria}</h1>
         </div>
 
-        <div className="content-1">
-          {loading ? (
-            <Loader />
-          ) : (
+        <section>
+          <div className="Search">
+            <input
+              type="text"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={handleSearchInput}
+            />
+            <AiOutlineSearch style={{ color: "grey" }} />
+          </div>
+
+          <div className="content-1">
             <ListBooks>
               <section className='listagem-1'>
                 <ul className='lista'>
@@ -196,9 +201,10 @@ export function DetalhePage() {
                 </ul>
               </section>
             </ListBooks>
-          )}
-        </div>
-      </section>
-    </PageContainer>
-  );
+          </div>
+        </section>
+      </>
+    )}
+  </PageContainer>
+);
 }

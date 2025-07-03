@@ -88,7 +88,7 @@ useEffect(() => {
                                     <li key={index} className="card">
                                         <img src={area.imagem} alt={area.nome} className='capa'/>
                                         <h2>{area.nome}</h2>
-                                        <button onClick={() => navigate(`/area/${area.nome.toLowerCase()}`)} >Ver Livros</button>
+                                        <button  className='button' onClick={() => navigate(`/area/${area.nome.toLowerCase()}`)} >Ver Livros</button>
                                     </li>
                                 ))}
                             </ul>
